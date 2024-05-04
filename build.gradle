@@ -95,17 +95,17 @@ publishing {
                 }
             }
         }
-        repositories {
-            if (project.hasProperty('MAVEN_USER') && project.hasProperty('MAVEN_PASSWORD') && project.hasProperty('MAVEN_URL')) {
-                maven {
-                    url project.getProperty('MAVEN_URL')
-                    authentication {
-                        basic(BasicAuthentication)
-                    }
-                    credentials {
-                        username = rootProject.getProperty('MAVEN_USER')
-                        password = rootProject.getProperty('MAVEN_PASSWORD')
-                    }
+    }
+    repositories {
+        if (project.hasProperty('MAVEN_USER') && project.hasProperty('MAVEN_PASSWORD') && project.hasProperty('MAVEN_URL')) {
+            maven {
+                url project.getProperty('MAVEN_URL')
+                authentication {
+                    basic(BasicAuthentication)
+                }
+                credentials {
+                    username = rootProject.getProperty('MAVEN_USER')
+                    password = rootProject.getProperty('MAVEN_PASSWORD')
                 }
             }
         }
