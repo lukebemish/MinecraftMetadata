@@ -244,9 +244,7 @@ abstract class GenerateModuleMetadata extends DefaultTask implements HasMinecraf
                 def sha256Dis = new DigestInputStream(sha1Dis, sha256)
                 def sha512Dis = new DigestInputStream(sha256Dis, sha512)
         ) {
-            while(sha512Dis.read() != -1) {
-                // Read the stream to the end
-            }
+            sha512Dis.transferTo(OutputStream.nullOutputStream())
         }
         out.md5 = md5.digest().encodeHex() as String
         out.sha1 = sha1.digest().encodeHex() as String
