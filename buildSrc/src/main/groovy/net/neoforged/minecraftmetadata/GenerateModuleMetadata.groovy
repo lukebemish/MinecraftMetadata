@@ -233,23 +233,11 @@ abstract class GenerateModuleMetadata extends DefaultTask implements HasMinecraf
         Map out = [:]
         out.name = "${getModuleName().get()}-${getModuleVersion().get()}.jar" as String
         out.url = url
-        MessageDigest md5 = MessageDigest.getInstance("MD5")
-        MessageDigest sha1 = MessageDigest.getInstance("SHA-1")
-        MessageDigest sha256 = MessageDigest.getInstance("SHA-256")
-        MessageDigest sha512 = MessageDigest.getInstance("SHA-512")
-        try (
-                def is = new FileInputStream(file)
-                def md5Dis = new DigestInputStream(is, md5)
-                def sha1Dis = new DigestInputStream(md5Dis, sha1)
-                def sha256Dis = new DigestInputStream(sha1Dis, sha256)
-                def sha512Dis = new DigestInputStream(sha256Dis, sha512)
-        ) {
-            sha512Dis.transferTo(OutputStream.nullOutputStream())
-        }
-        out.md5 = md5.digest().encodeHex() as String
-        out.sha1 = sha1.digest().encodeHex() as String
-        out.sha256 = sha256.digest().encodeHex() as String
-        out.sha512 = sha512.digest().encodeHex() as String
+        byte[] bytes = file.bytes
+        out.md5 = bytes.digest('MD5')
+        out.sha1 = bytes.digest('SHA-1')
+        out.sha256 = bytes.digest('SHA-256')
+        out.sha512 = bytes.digest('SHA-512')
         out['size'] = file.length()
         return out
     }
