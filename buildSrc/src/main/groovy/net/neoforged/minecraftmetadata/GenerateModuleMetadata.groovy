@@ -123,7 +123,9 @@ abstract class GenerateModuleMetadata extends DefaultTask implements HasMinecraf
             ])
         }
 
-        [
+        // Absolute URLs are not supported in Gradle metadata, despite the spec implying they are
+        // https://github.com/gradle/gradle/issues/29033
+        /*[
                 client: clientJar.get().asFile,
                 server: serverJar.get().asFile
         ].each { it, file ->
@@ -149,7 +151,7 @@ abstract class GenerateModuleMetadata extends DefaultTask implements HasMinecraf
                     ],
                     files: [getFileFor(file, ((metaJson.downloads as Map)[it] as Map).url as String)]
             ])
-        }
+        }*/
 
         getOutputFile().get().asFile.text = JsonOutput.prettyPrint(JsonOutput.toJson(metadata))
     }
